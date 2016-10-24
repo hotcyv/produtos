@@ -52,6 +52,7 @@
 		</c:forEach>
 	</table>
 	<a href="<c:url value="/produto?funcao=formulario" />"><fmt:message key="mensagem.novoProduto" /></a>
+	<a href="<c:url value="/login?funcao=logout" />"><fmt:message key="mensagem.logout" /></a>
 	<c:import url="../rodape.jsp" />
 </body>
 </html>

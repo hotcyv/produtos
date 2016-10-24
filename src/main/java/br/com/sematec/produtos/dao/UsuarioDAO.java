@@ -8,8 +8,8 @@ import br.com.sematec.produtos.modelo.Usuario;
 public class UsuarioDAO {
 	private final static Map<String, Usuario> USUARIOS = new HashMap<>();
 	static {
-		USUARIOS.put("professor@sematecsolucoes.com.br", new Usuario(1L,
-				"professor", "professor@sematecsolucoes.com.br", "professor"));
+		USUARIOS.put("victor", new Usuario(1L,
+				"victor", "victor", "victor"));
 		USUARIOS.put("diretor@sematecsolucoes.com.br", new Usuario(2L,
 				"diretor", "diretor@sematecsolucoes.com.br", "diretor"));
 	}

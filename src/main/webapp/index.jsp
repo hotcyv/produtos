@@ -22,10 +22,10 @@
 		<input type="submit" value="Autenticar" />
 	</form>
 	<%
-		if (request.getAttribute("erro") != null) {
+		if (request.getAttribute("mensagem") != null) {
 	%>
 	<h2>
-		<%=request.getAttribute("erro")%>
+		<%=request.getAttribute("mensagem")%>
 	</h2>
 	<%
 		}

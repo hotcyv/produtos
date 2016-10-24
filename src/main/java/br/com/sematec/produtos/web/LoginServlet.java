@@ -1,5 +1,7 @@
 package br.com.sematec.produtos.web;
 
+import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +17,19 @@ import br.com.sematec.produtos.modelo.Usuario;
 @WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String funcao = req.getParameter("funcao");
+		switch (funcao) {
+		case "logout":
+			logout(req, resp);
+			break;
+		default:
+			System.out.println("funcao desconhecida" + funcao);
+			break;
+		}
+	}
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -32,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 				RequestDispatcher dispatcher = req.getRequestDispatcher(pagina);
 				dispatcher.forward(req, resp);
 			} else {
-				req.setAttribute("erro", "email ou senha inválidos.");
+				req.setAttribute("mensagem", "email ou senha invï¿½lidos.");
 				String pagina = "/index.jsp";
 				RequestDispatcher dispatcher = req.getRequestDispatcher(pagina);
 				dispatcher.forward(req, resp);
@@ -40,5 +55,13 @@ public class LoginServlet extends HttpServlet {
 		} catch (Throwable theException) {
 			System.out.println(theException);
 		}
+	}
+	
+	private void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getSession().removeAttribute("usuarioLogado");
+		req.setAttribute("mensagem", "logout realizado");
+		String pagina = "/index.jsp";
+		RequestDispatcher dispatcher = req.getRequestDispatcher(pagina);
+		dispatcher.forward(req, resp);
 	}
 }

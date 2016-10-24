@@ -26,20 +26,24 @@ public class ProdutoServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String funcao = req.getParameter("funcao");
-		switch (funcao) {
-		case "formulario":
-			formulario(req, resp);
-			break;
-		case "remove":
-			remove(req, resp);
-			break;
-		case "lista":
-			lista(req, resp);
-			break;
-		default:
-			LOGGER.warning("função desconhecida:" + funcao);
-			break;
+		if (req.getSession().getAttribute("usuarioLogado")!=null) {
+			String funcao = req.getParameter("funcao");
+			switch (funcao) {
+			case "formulario":
+				formulario(req, resp);
+				break;
+			case "remove":
+				remove(req, resp);
+				break;
+			case "lista":
+				lista(req, resp);
+				break;
+			default:
+				LOGGER.warning("funï¿½ï¿½o desconhecida:" + funcao);
+				break;
+			}
+		} else {
+			login(req, resp);
 		}
 	}
 
@@ -83,7 +87,7 @@ public class ProdutoServlet extends HttpServlet {
 			dao.remove(id);
 			text = produto.getNome() + " removido com sucesso.";
 		} else {
-			text = "id do item a ser removido não foi informado.";
+			text = "id do item a ser removido nï¿½o foi informado.";
 		}
 		resp.setContentType("text/plain");
 		resp.setCharacterEncoding("UTF-8");
@@ -92,5 +96,11 @@ public class ProdutoServlet extends HttpServlet {
 
 	public void remove(Produto produto) {
 		dao.remove(produto);
+	}
+	private void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String pagina = "/index.jsp";
+		req.setAttribute("mensagem", "AÃ§Ã£o restrita a usuÃ¡rios logados!");
+		RequestDispatcher dispatcher = req.getRequestDispatcher(pagina);
+		dispatcher.forward(req, resp);
 	}
 }
